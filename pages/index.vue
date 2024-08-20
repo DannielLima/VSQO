@@ -1,75 +1,70 @@
 <template>
     <div>
-      <!-- Navbar -->
-      <nav class="bg-gray-900 text-white py-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center px-4">
-          <a href="/" class="text-2xl font-bold">VSQO</a>
-          <div>
-            <a href="/" class="mx-4 hover:text-gray-400">Home</a>
-            <a href="/gallery" class="mx-4 hover:text-gray-400">Gallery</a>
-          </div>
-        </div>
-      </nav>
-  
       <!-- Main Content -->
-      <main class="py-10 bg-gray-100 min-h-screen">
-        <h1 class="text-5xl font-bold text-gray-800 mb-12 text-center">Welcome to VSQO</h1>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-4">
-          <div
-            v-for="(image, index) in images"
-            :key="index"
-            class="relative group overflow-hidden rounded-lg shadow-lg bg-white"
-          >
-            <img
-              :src="image"
-              alt="Gallery Image"
-              class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <span class="text-white text-lg font-bold">View Image</span>
-            </div>
-          </div>
+      <main class="relative py-16 bg-gray-100 min-h-screen overflow-hidden">
+        <h1 class="text-5xl font-bold text-gray-800 mb-12 text-center">VSQO 🍍</h1>
+        <div class="relative w-full h-full">
+          <canvas id="objectsCanvas" class="absolute top-0 left-0 w-full h-full pointer-events-none"></canvas>
         </div>
       </main>
-  
-      <!-- Footer -->
-      <footer class="bg-gray-900 text-white py-4">
-        <div class="container mx-auto text-center px-4">
-          <p class="text-sm">&copy; 2024 VSQO. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   </template>
   
-  <style>
-  @keyframes fade-in-down {
-    0% {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  <script setup>
+  import { onMounted } from 'vue';
+  import gsap from 'gsap';
   
-  @keyframes fade-in-up {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  onMounted(() => {
+    const canvas = document.getElementById('objectsCanvas');
+    const ctx = canvas.getContext('2d');
+    const objects = [];
   
-  .animate-fade-in-down {
-    animation: fade-in-down 1s ease-out forwards;
-  }
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
   
-  .animate-fade-in-up {
-    animation: fade-in-up 1s ease-out forwards;
-  }
-  </style>
+    function createObject() {
+      const size = Math.random() * 30 + 10;
+      objects.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size,
+        speedX: Math.random() * 2 - 1,
+        speedY: Math.random() * 2 - 1,
+        color: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
+      });
+    }
+  
+    function drawObjects() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      objects.forEach(obj => {
+        ctx.beginPath();
+        ctx.arc(obj.x, obj.y, obj.size, 0, Math.PI * 2);
+        ctx.fillStyle = obj.color;
+        ctx.fill();
+      });
+    }
+  
+    function updateObjects() {
+      objects.forEach(obj => {
+        obj.x += obj.speedX;
+        obj.y += obj.speedY;
+  
+        if (obj.x > canvas.width || obj.x < 0) obj.speedX *= -1;
+        if (obj.y > canvas.height || obj.y < 0) obj.speedY *= -1;
+      });
+    }
+  
+    function animate() {
+      drawObjects();
+      updateObjects();
+      requestAnimationFrame(animate);
+    }
+  
+    for (let i = 0; i < 100; i++) {
+      createObject();
+    }
+  
+    animate();
+  });
+  </script>
   
