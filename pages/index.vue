@@ -1,11 +1,44 @@
 <template>
-    <section class="flex items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-purple-500">
-      <div class="text-center text-white p-8 rounded-lg bg-opacity-90 backdrop-filter backdrop-blur-lg">
-        <h1 class="text-5xl font-extrabold mb-6 animate-fade-in-down">Welcome to VSQO</h1>
-        <p class="text-lg mb-8 animate-fade-in-up">Capture and share your best shots.</p>
-        <NuxtLink to="/gallery" class="text-lg font-semibold bg-white text-blue-600 px-6 py-3 rounded-full hover:bg-blue-100 transition-colors">Explore Gallery</NuxtLink>
-      </div>
-    </section>
+    <div>
+      <!-- Navbar -->
+      <nav class="bg-gray-900 text-white py-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center px-4">
+          <a href="/" class="text-2xl font-bold">VSQO</a>
+          <div>
+            <a href="/" class="mx-4 hover:text-gray-400">Home</a>
+            <a href="/gallery" class="mx-4 hover:text-gray-400">Gallery</a>
+          </div>
+        </div>
+      </nav>
+  
+      <!-- Main Content -->
+      <main class="py-10 bg-gray-100 min-h-screen">
+        <h1 class="text-5xl font-bold text-gray-800 mb-12 text-center">Welcome to VSQO</h1>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-4">
+          <div
+            v-for="(image, index) in images"
+            :key="index"
+            class="relative group overflow-hidden rounded-lg shadow-lg bg-white"
+          >
+            <img
+              :src="image"
+              alt="Gallery Image"
+              class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <span class="text-white text-lg font-bold">View Image</span>
+            </div>
+          </div>
+        </div>
+      </main>
+  
+      <!-- Footer -->
+      <footer class="bg-gray-900 text-white py-4">
+        <div class="container mx-auto text-center px-4">
+          <p class="text-sm">&copy; 2024 VSQO. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
   </template>
   
   <style>
