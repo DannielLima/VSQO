@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Navbar -->
     <nav class="bg-white text-gray-800 py-4 shadow-md border-b border-gray-200">
       <div class="container mx-auto flex justify-between items-center px-6">
         <a href="/" class="text-3xl font-semibold">VSQO</a>
@@ -11,10 +10,8 @@
       </div>
     </nav>
 
-    <!-- Main Content -->
     <NuxtPage />
     
-    <!-- Footer -->
     <footer class="bg-gray-100 text-gray-600 py-6">
       <div class="container mx-auto text-center">
         <p class="text-sm">&copy; 2024 VSQO. All rights reserved.</p>
@@ -24,7 +21,6 @@
 </template>
 
 <style scoped>
-/* Add Inter font for the entire site */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 body {
