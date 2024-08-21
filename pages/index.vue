@@ -2,8 +2,15 @@
   <div>
     <main class="relative py-16 bg-gray-100 min-h-screen overflow-hidden">
       <div class="text-center relative z-10">
-        <h1 id="animatedText" class="text-5xl font-bold text-gray-800 mb-12 flex flex-wrap justify-center">
+        <h1 id="animatedText" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-800 mb-12">
+          BELIEVE IN YOURSELF
         </h1>
+        <p class="text-md text-gray-500 mb-8">
+          Discover your potential and embrace new opportunities.
+        </p>
+        <a href="/gallery" class="gallery-button px-8 py-4 bg-indigo-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-indigo-500 hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+          Gallery
+        </a>
       </div>
       <div class="relative w-full h-full">
         <canvas id="objectsCanvas" class="absolute top-0 left-0 w-full h-full pointer-events-none"></canvas>
@@ -13,10 +20,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, nextTick } from 'vue';
-import gsap from 'gsap';
-
-const textContent = 'VSQO';
+import { onMounted, nextTick } from 'vue';
 
 onMounted(async () => {
   await nextTick();
@@ -72,15 +76,6 @@ onMounted(async () => {
   }
 
   animate();
-
-  const textElement = document.getElementById('animatedText');
-  textElement.innerHTML = textContent.split('').map(letter => `<span>${letter}</span>`).join('');
-
-  gsap.fromTo(
-    '#animatedText span',
-    { scale: 1, opacity: 0 },
-    { scale: 1.2, opacity: 1, duration: 1.5, ease: 'elastic.out(1, 0.3)', stagger: 0.1 }
-  );
 });
 </script>
 
@@ -95,22 +90,41 @@ main {
   position: relative;
 }
 
-#animatedText {
-  position: relative;
-  display: inline-flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  perspective: 1000px;
+@media (max-width: 640px) {
+  #animatedText {
+    font-size: 2xl;
+  }
 }
 
-#animatedText span {
-  display: inline-block;
-  transition: transform 0.3s ease, text-shadow 0.3s ease;
-  transform-style: preserve-3d;
+@media (min-width: 640px) and (max-width: 768px) {
+  #animatedText {
+    font-size: 3xl;
+  }
 }
 
-#animatedText span:hover {
-  transform: rotateX(15deg) rotateY(15deg) scale(1.3);
-  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.1);
+@media (min-width: 768px) and (max-width: 1024px) {
+  #animatedText {
+    font-size: 4xl;
+  }
+}
+
+@media (min-width: 1024px) {
+  #animatedText {
+    font-size: 5xl;
+  }
+}
+
+.gallery-button {
+  background-color: #4f46e5;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-button:hover {
+  background-color: #4338ca;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-button:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
 }
 </style>
